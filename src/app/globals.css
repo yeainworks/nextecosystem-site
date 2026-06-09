@@ -1,26 +1,208 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #EBEBEB;
+  --surface: #FFFFFF;
+  --surface-2: #F5F5F3;
+  --surface-hover: #F0F0EE;
+  --border: rgba(0,0,0,0.09);
+  --border-strong: rgba(0,0,0,0.18);
+  --text-1: #0A0A0A;
+  --text-2: #666666;
+  --text-3: #999999;
+  --radius-card: 16px;
+  --radius-btn: 8px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: auto; color-scheme: light; } /* Lenis handles smooth scroll */
+
+body {
+  background: #EBEBEB;
+  color: #0A0A0A;
+  font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', 'Inter', BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.divider { height: 1px; background: var(--border); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  transition: border-color 0.15s, background 0.15s;
+}
+.card:hover { border-color: var(--border-strong); }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+a { color: inherit; text-decoration: none; }
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ─── Scroll-driven animations — powered by Lenis smooth scroll ─── */
+/*
+  Lenis interpolates window.scrollY via window.scrollTo(), so
+  animation-timeline: view() is driven by the smoothed scroll position.
+  The result: scroll-synced animations that feel exactly like Zentto.
+*/
+
+/* Blur fade-in: headings and labels appear as they enter the viewport */
+@keyframes title-track {
+  0%   { filter: blur(10px); opacity: 0; transform: translateY(6px); }
+  100% { filter: blur(0px);  opacity: 1; transform: translateY(0); }
+}
+.anim-blur {
+  animation: title-track linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 30%;
+}
+
+/* 3D fold-in: cards rotate from top as they come into view */
+@keyframes reason-fold {
+  0%   { opacity: 0; transform: rotateX(-28deg) translateY(-12px); }
+  100% { opacity: 1; transform: rotateX(0deg)   translateY(0px); }
+}
+.anim-fold {
+  transform-origin: top center;
+  animation: reason-fold linear both;
+  animation-timeline: view();
+  animation-range: entry 25% entry 65%;
+}
+
+/* Fade up: list rows, stats, cards */
+@keyframes fade-up {
+  0%   { opacity: 0; transform: translateY(26px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+.anim-up {
+  animation: fade-up linear both;
+  animation-timeline: view();
+  animation-range: entry 5% entry 50%;
+}
+
+/* Scale in: featured cards */
+@keyframes scale-in {
+  0%   { opacity: 0; transform: scale(0.96) translateY(16px); }
+  100% { opacity: 1; transform: scale(1)    translateY(0px); }
+}
+.anim-scale {
+  animation: scale-in linear both;
+  animation-timeline: view();
+  animation-range: entry 5% entry 50%;
+}
+
+/* Word fill: scroll-synced word-by-word colour reveal — Zentto-exact */
+@keyframes word-fill {
+  100% { color: var(--word-fill-to, #0A0A0A); }
+}
+
+/* Light variant (default) */
+.word-fill span {
+  color: rgba(10, 10, 10, 0.18);
+  display: inline-block;
+  margin-right: 0.18em;
+  animation: word-fill linear both;
+  animation-timeline: view();
+  animation-range:
+    entry calc(8% + var(--word-index, 0) * 2.4%)
+    cover calc(30% + var(--word-index, 0) * 2.4%);
+}
+
+/* Dark background variant */
+.word-fill-dark span {
+  color: rgba(245, 245, 240, 0.14);
+  --word-fill-to: #F5F5F0;
+}
+
+/* Legacy .word-fill-word class — keep for desc text */
+.word-fill-word {
+  color: rgba(10, 10, 10, 0.22);
+  display: inline-block;
+  margin-right: 0.18em;
+  animation: word-fill linear both;
+  animation-timeline: view();
+  animation-range:
+    entry calc(5% + var(--i, 0) * 2.8%)
+    cover calc(28% + var(--i, 0) * 2.8%);
+  --word-fill-to: #555;
+}
+
+/* Graceful fallback: no animation-timeline support */
+@supports not (animation-timeline: view()) {
+  .anim-blur, .anim-fold, .anim-up, .anim-scale {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .word-fill span, .word-fill-word {
+    color: var(--word-fill-to, #0A0A0A) !important;
+    animation: none !important;
+  }
+  .word-fill-dark span {
+    color: #F5F5F0 !important;
+  }
+  .word-fill-word { color: #555 !important; }
+}
+
+/* ─── Mobile: replace 3D fold with simple fade-up (avoids scroll layout thrashing) ── */
+@media (max-width: 640px) {
+  .anim-fold {
+    animation-name: fade-up;
+    transform-origin: unset;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .anim-blur, .anim-fold, .anim-up, .anim-scale, .word-fill-word {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  .word-fill-word { color: #555 !important; }
+  .word-fill span {
+    animation: none !important;
+    color: var(--word-fill-to, #0A0A0A) !important;
+  }
+  .word-fill-dark span { color: #F5F5F0 !important; }
 }
+
+/* IntersectionObserver reveal (fallback layer for data-anim elements) */
+[data-anim="fade-up"][data-anim-state="hidden"]   { opacity: 0; transform: translateY(28px); }
+[data-anim="blur-in"][data-anim-state="hidden"]   { opacity: 0; filter: blur(12px); transform: translateY(8px); }
+[data-anim="fold"][data-anim-state="hidden"]      { opacity: 0; transform: rotateX(-34deg) translateY(-10px); transform-origin: top center; }
+[data-anim="scale-in"][data-anim-state="hidden"]  { opacity: 0; transform: scale(0.94); }
+
+[data-anim="fade-up"][data-anim-state="visible"]  { opacity: 1; transform: translateY(0); transition: opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1); }
+[data-anim="blur-in"][data-anim-state="visible"]  { opacity: 1; filter: blur(0); transform: translateY(0); transition: opacity .9s cubic-bezier(.16,1,.3,1), filter .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+[data-anim="fold"][data-anim-state="visible"]     { opacity: 1; transform: rotateX(0) translateY(0); transform-origin: top center; transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1); }
+[data-anim="scale-in"][data-anim-state="visible"] { opacity: 1; transform: scale(1); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
