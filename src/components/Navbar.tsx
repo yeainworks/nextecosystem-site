@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 const links = [
   { label: "Приложения", href: "/apps" },
-  { label: "Новости",    href: "/news" },
+  { label: "Blog",       href: "/blog" },
   { label: "Контакты",   href: "/contacts" },
 ];
 
@@ -47,9 +47,8 @@ export default function Navbar() {
       <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 clamp(16px, 4vw, 40px)", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
         {/* Logo */}
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 700, fontSize: 16, letterSpacing: "-0.04em", color: "#f5f5f7", textDecoration: "none" }}>
+        <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
           <Image src="/logo.png" alt="NEXT" width={30} height={30} style={{ borderRadius: 9, flexShrink: 0 }}/>
-          NEXT
         </Link>
 
         {/* Desktop nav links */}

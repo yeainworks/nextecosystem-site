@@ -255,7 +255,7 @@ export default function Home() {
             <p style={{ fontSize: 17, color: "#f5f5f7", lineHeight: 1.65, maxWidth: 400, marginBottom: 36 }}>
               Каждый новый продукт становится частью единой экосистемы. Мы строим долгосрочно — без лишних посредников.
             </p>
-            <Link href="/news" style={{ fontSize: 14, color: "#f5f5f7", display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", letterSpacing: "-0.01em", transition: "opacity 0.2s" }}
+            <Link href="/blog" style={{ fontSize: 14, color: "#f5f5f7", display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", letterSpacing: "-0.01em", transition: "opacity 0.2s" }}
               onMouseEnter={e => e.currentTarget.style.opacity = "0.55"}
               onMouseLeave={e => e.currentTarget.style.opacity = "1"}
             >
@@ -277,7 +277,7 @@ export default function Home() {
                   Последние<br/>события
                 </h2>
               </div>
-              <Link href="/news" className="muted-lnk" style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", display: "flex", alignItems: "center", gap: 6, paddingBottom: 4, textDecoration: "none", transition: "color 0.2s" }}>
+              <Link href="/blog" className="muted-lnk" style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", display: "flex", alignItems: "center", gap: 6, paddingBottom: 4, textDecoration: "none", transition: "color 0.2s" }}>
                 Все новости
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </Link>
@@ -286,7 +286,7 @@ export default function Home() {
 
           {news.map((a, i) => (
             <FadeIn key={a.title} delay={i * 0.08}>
-              <Link href="/news" className="news-row-dk" style={{
+              <Link href="/blog" className="news-row-dk" style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24,
                 padding: "24px 0",
                 borderTop: "1px solid rgba(255,255,255,0.07)",
