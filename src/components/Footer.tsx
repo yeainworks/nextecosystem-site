@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const socials = [
   {
@@ -33,27 +34,27 @@ const socials = [
   },
 ];
 
-const legal = [
-  { label: "Политика конфиденциальности", href: "/privacy" },
-  { label: "Условия использования",       href: "/terms" },
-  { label: "Правовая информация",         href: "/legal" },
-];
-
 export default function Footer() {
+  const { t } = useLanguage();
+
+  const legal = [
+    { label: t.footer.privacy, href: "/privacy" },
+    { label: t.footer.terms,   href: "/terms" },
+    { label: t.footer.legal,   href: "/legal" },
+  ];
+
   return (
     <footer style={{ background: "#0a0a0a", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
 
         {/* ── Main ── */}
         <div style={{ padding: "52px 0 44px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 40 }}>
-
-          {/* Brand */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Link href="/" style={{ display: "inline-flex", alignItems: "center", textDecoration: "none", marginBottom: 14 }}>
               <Image src="/logo.png" alt="NEXT" width={28} height={28} style={{ borderRadius: 8 }}/>
             </Link>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.65, maxWidth: 260, marginBottom: 20 }}>
-              Реальные сервисы под одним брендом. Экосистема постоянно растёт.
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.65, maxWidth: 280, marginBottom: 20 }}>
+              {t.footer.tagline}
             </p>
             <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
               {socials.map(s => (
@@ -65,14 +66,13 @@ export default function Footer() {
               ))}
             </div>
           </div>
-
         </div>
 
         {/* ── Bottom bar ── */}
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", padding: "16px 0", display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 12 }}>
-          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.35)" }}>Copyright © 2026 NEXT Ecosystem</span>
+          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.35)" }}>{t.footer.copyright}</span>
           <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)" }}>|</span>
-          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 4 }}>
+          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 4, justifyContent: "center" }}>
             {legal.map((l, i) => (
               <span key={l.label} style={{ display: "flex", alignItems: "center" }}>
                 {i > 0 && <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)", margin: "0 8px" }}>|</span>}
@@ -89,14 +89,6 @@ export default function Footer() {
       <style>{`
         .fl:hover { color: #f5f5f7 !important; }
         .social-icon:hover { color: #f5f5f7 !important; }
-        @media (max-width: 900px) {
-          .footer-grid { grid-template-columns: 1fr 1fr !important; }
-          .footer-grid > *:first-child { grid-column: 1 / -1 !important; }
-        }
-        @media (max-width: 560px) {
-          .footer-grid { grid-template-columns: 1fr 1fr !important; }
-          .footer-grid > *:first-child { grid-column: 1 / -1 !important; }
-        }
       `}</style>
     </footer>
   );

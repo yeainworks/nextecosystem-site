@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Vacancy {
   id: string;
@@ -31,22 +32,23 @@ const DEPT_COLOR: Record<string, string> = {
 };
 
 export default function VacanciesPage() {
+  const { t } = useLanguage();
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
-  const [dept, setDept] = useState("Все");
+  const [dept, setDept] = useState<string>(t.vacancies.cats_all);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.body.style.background = "#0a0a0a";
-    document.title = "Вакансии — NextECOSYSTEM";
     fetch("/api/vacancies?active=true")
       .then(r => r.json())
       .then(data => { setVacancies(data); setLoading(false); });
     return () => { document.body.style.background = ""; };
   }, []);
 
-  const depts = ["Все", ...Array.from(new Set(vacancies.map(v => v.department)))];
-  const filtered = dept === "Все" ? vacancies : vacancies.filter(v => v.department === dept);
+  const allLabel = t.vacancies.cats_all;
+  const depts = [allLabel, ...Array.from(new Set(vacancies.map(v => v.department)))];
+  const filtered = dept === allLabel ? vacancies : vacancies.filter(v => v.department === dept);
 
   return (
     <div style={{ background: "#0a0a0a", color: "#f5f5f7", minHeight: "100vh", paddingTop: 100, paddingBottom: 120 }}>
@@ -62,16 +64,12 @@ export default function VacanciesPage() {
 
       <div style={{ maxWidth: 860, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
 
-        {/* Header */}
         <div style={{ marginBottom: 52 }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>Карьера</p>
-          <h1 style={{ fontSize: "clamp(36px,5vw,56px)", fontWeight: 900, letterSpacing: "-0.04em", color: "#f5f5f7", marginBottom: 12, textTransform: "uppercase" }}>Вакансии</h1>
-          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: 480 }}>
-            Строим экосистему продуктов. Ищем людей, которым важен результат, а не процесс.
-          </p>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>{t.vacancies.eyebrow}</p>
+          <h1 style={{ fontSize: "clamp(36px,5vw,56px)", fontWeight: 900, letterSpacing: "-0.04em", color: "#f5f5f7", marginBottom: 12, textTransform: "uppercase" }}>{t.vacancies.h1}</h1>
+          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: 480 }}>{t.vacancies.subtitle}</p>
         </div>
 
-        {/* Dept filter */}
         {!loading && vacancies.length > 0 && (
           <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 36 }}>
             {depts.map(d => (
@@ -80,17 +78,16 @@ export default function VacanciesPage() {
           </div>
         )}
 
-        {/* Content */}
         {loading ? (
-          <div style={{ padding: "80px 0", textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: 14 }}>Загрузка...</div>
+          <div style={{ padding: "80px 0", textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: 14 }}>{t.vacancies.loading}</div>
         ) : filtered.length === 0 ? (
           <div style={{ padding: "80px 0", textAlign: "center" }}>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.35)", marginBottom: 28, lineHeight: 1.7 }}>
-              Сейчас открытых вакансий нет.<br/>Следите за обновлениями.
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.35)", marginBottom: 28, lineHeight: 1.7, whiteSpace: "pre-line" }}>
+              {t.vacancies.empty_title}
             </p>
             <a href="mailto:nextforbusiness@gmail.com"
               style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 22px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.6)", fontSize: 13, textDecoration: "none", transition: "border-color 0.15s" }}>
-              Отправить резюме
+              {t.vacancies.send_cv}
             </a>
           </div>
         ) : (
@@ -100,8 +97,6 @@ export default function VacanciesPage() {
               return (
                 <div key={v.id} className="vac-card"
                   style={{ background: "#111", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, overflow: "hidden" }}>
-
-                  {/* Header row — clickable */}
                   <div className="vac-header" style={{ padding: "22px 24px" }}
                     onClick={() => setExpanded(p => p === v.id ? null : v.id)}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
@@ -124,25 +119,23 @@ export default function VacanciesPage() {
                       </p>
                     )}
                   </div>
-
-                  {/* Expanded body */}
                   {isOpen && (
                     <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "24px 24px 28px" }}>
                       {v.description && (
                         <div style={{ marginBottom: 24 }}>
-                          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>О позиции</p>
+                          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>{t.vacancies.about}</p>
                           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.75, whiteSpace: "pre-line" }}>{v.description}</p>
                         </div>
                       )}
                       {v.requirements && (
                         <div style={{ marginBottom: 28 }}>
-                          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>Требования</p>
+                          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>{t.vacancies.requirements}</p>
                           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.75, whiteSpace: "pre-line" }}>{v.requirements}</p>
                         </div>
                       )}
-                      <a href={`mailto:nextforbusiness@gmail.com?subject=Отклик: ${encodeURIComponent(v.title)}`} className="apply-btn"
+                      <a href={`mailto:nextforbusiness@gmail.com?subject=${encodeURIComponent(v.title)}`} className="apply-btn"
                         style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 24px", borderRadius: 8, background: "#f5f5f7", color: "#0a0a0a", fontSize: 13, fontWeight: 600, textDecoration: "none", transition: "opacity 0.15s" }}>
-                        Откликнуться
+                        {t.vacancies.apply}
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                       </a>
                     </div>

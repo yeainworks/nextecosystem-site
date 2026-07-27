@@ -1,12 +1,7 @@
 "use client";
 import { useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-
-
-const channels = [
-  { label: "Почта", value: "nextforbusiness@gmail.com", href: "mailto:nextforbusiness@gmail.com", desc: "Вопросы, партнёрство, пресса" },
-  { label: "Telegram", value: "@nextformgmt", href: "https://t.me/nextformgmt", desc: "Менеджер экосистемы" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -26,6 +21,13 @@ function FadeIn({ children, delay = 0, style }: { children: React.ReactNode; del
 }
 
 export default function ContactsPage() {
+  const { t } = useLanguage();
+
+  const channels = [
+    { label: t.contacts.email_label, value: "nextforbusiness@gmail.com", href: "mailto:nextforbusiness@gmail.com", desc: t.contacts.email_desc },
+    { label: t.contacts.tg_label,   value: "@nextformgmt",              href: "https://t.me/nextformgmt",         desc: t.contacts.tg_desc },
+  ];
+
   useEffect(() => {
     document.body.style.background = "#0a0a0a";
     return () => { document.body.style.background = ""; };
@@ -35,16 +37,10 @@ export default function ContactsPage() {
     <div style={{ paddingTop: 100, paddingBottom: 100, minHeight: "100vh", background: "#0a0a0a" }}>
       <style>{`
         .contact-cell:hover { background: #1a1a1a !important; }
-        .social-cell:hover  { background: #1a1a1a !important; }
         .careers-btn:hover  { opacity: 0.8 !important; }
         @media (max-width: 768px) {
           .contacts-grid { grid-template-columns: 1fr !important; }
-          .socials-grid  { grid-template-columns: repeat(2,1fr) !important; }
-.careers-row   { flex-direction: column !important; gap: 20px !important; }
-        }
-        @media (max-width: 480px) {
-          .socials-grid { grid-template-columns: repeat(2,1fr) !important; }
-          .contacts-grid { grid-template-columns: 1fr !important; }
+          .careers-row   { flex-direction: column !important; gap: 20px !important; }
         }
       `}</style>
 
@@ -52,16 +48,17 @@ export default function ContactsPage() {
 
         <FadeIn>
           <div style={{ marginBottom: 48 }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 12 }}>Контакты</p>
-            <h1 style={{ fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 900, letterSpacing: "-0.04em", color: "#f5f5f7", marginBottom: 10, textTransform: "uppercase" }}>Свяжитесь<br />с нами</h1>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)" }}>Ответим на любой вопрос — выберите удобный способ</p>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 12 }}>{t.contacts.eyebrow}</p>
+            <h1 style={{ fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 900, letterSpacing: "-0.04em", color: "#f5f5f7", marginBottom: 10, textTransform: "uppercase" }}>
+              {t.contacts.h1line1}<br />{t.contacts.h1line2}
+            </h1>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)" }}>{t.contacts.subtitle}</p>
           </div>
         </FadeIn>
 
-        {/* Contacts */}
         <FadeIn delay={0.08}>
           <div style={{ marginBottom: 52 }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>Связь</p>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>{t.contacts.connection}</p>
             <div className="contacts-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 1, background: "rgba(255,255,255,0.05)", borderRadius: 16, overflow: "hidden" }}>
               {channels.map((c) => (
                 <a key={c.value} href={c.href} target={c.href.startsWith("https") ? "_blank" : undefined} rel="noopener noreferrer" className="contact-cell"
@@ -75,18 +72,15 @@ export default function ContactsPage() {
           </div>
         </FadeIn>
 
-        {/* Careers */}
         <FadeIn delay={0.2}>
           <div className="careers-row" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, padding: "28px", background: "#141414", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16 }}>
             <div>
-              <div style={{ fontSize: 16, fontWeight: 700, letterSpacing: "-0.02em", color: "#f5f5f7", marginBottom: 6 }}>Карьера</div>
-              <p style={{ fontSize: 13, color: "#f5f5f7", maxWidth: 380, lineHeight: 1.6, margin: 0 }}>
-                Нанимаем разработчиков, дизайнеров и менеджеров продукта. Полностью удалённая команда.
-              </p>
+              <div style={{ fontSize: 16, fontWeight: 700, letterSpacing: "-0.02em", color: "#f5f5f7", marginBottom: 6 }}>{t.contacts.career_title}</div>
+              <p style={{ fontSize: 13, color: "#f5f5f7", maxWidth: 380, lineHeight: 1.6, margin: 0 }}>{t.contacts.career_text}</p>
             </div>
             <a href="/vacancies" className="careers-btn"
               style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "11px 14px 11px 20px", background: "#f5f5f7", color: "#0a0a0a", borderRadius: 8, fontSize: 13, fontWeight: 600, flexShrink: 0, textDecoration: "none", transition: "opacity 0.15s" }}>
-              Вакансии
+              {t.contacts.career_btn}
               <span style={{ background: "rgba(0,0,0,0.12)", borderRadius: 4, width: 24, height: 24, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>→</span>
             </a>
           </div>
