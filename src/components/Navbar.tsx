@@ -4,12 +4,15 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 
 const links = [
   { label: "Приложения", href: "/apps" },
-  { label: "Blog",       href: "/blog" },
+  { label: "Новости",    href: "/blog" },
   { label: "Контакты",   href: "/contacts" },
 ];
+
+const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,7 +27,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", h);
   }, []);
 
-  // Lock body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -44,74 +46,95 @@ export default function Navbar() {
       borderBottom: `1px solid ${borderColor}`,
       transition: "background 0.3s, border-color 0.3s",
     }}>
-      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 clamp(16px, 4vw, 40px)", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 clamp(16px, 4vw, 40px)", width: "100%", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center" }}>
 
         {/* Logo */}
-        <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-          <Image src="/logo.png" alt="NEXT" width={30} height={30} style={{ borderRadius: 9, flexShrink: 0 }}/>
-        </Link>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.1, ease }}
+        >
+          <Link href="/" style={{ display: "inline-flex", alignItems: "center", textDecoration: "none" }}>
+            <Image src="/logo.png" alt="NEXT" width={30} height={30} style={{ borderRadius: 9, flexShrink: 0 }}/>
+          </Link>
+        </motion.div>
 
         {/* Desktop nav links */}
         <div style={{ display: "flex", alignItems: "center", gap: 2 }} className="nav-desktop">
-          {links.map((l) => (
-            <Link key={l.href} href={l.href} style={{
-              padding: "7px 16px", borderRadius: 8,
-              fontSize: 14, fontWeight: 500,
-              color: pathname === l.href ? "#f5f5f7" : "rgba(255,255,255,0.45)",
-              background: pathname === l.href ? "rgba(255,255,255,0.1)" : "transparent",
-              transition: "color 0.15s, background 0.15s",
-              textDecoration: "none",
-            }}
-              onMouseEnter={e => e.currentTarget.style.color = "#f5f5f7"}
-              onMouseLeave={e => e.currentTarget.style.color = pathname === l.href ? "#f5f5f7" : "rgba(255,255,255,0.45)"}
+          {links.map((l, i) => (
+            <motion.div
+              key={l.href}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.18 + i * 0.07, ease }}
             >
-              {l.label}
-            </Link>
+              <Link href={l.href} style={{
+                padding: "7px 16px", borderRadius: 8,
+                fontSize: 14, fontWeight: 500,
+                color: pathname === l.href ? "#f5f5f7" : "rgba(255,255,255,0.45)",
+                background: pathname === l.href ? "rgba(255,255,255,0.1)" : "transparent",
+                transition: "color 0.15s, background 0.15s",
+                textDecoration: "none", display: "block",
+              }}
+                onMouseEnter={e => e.currentTarget.style.color = "#f5f5f7"}
+                onMouseLeave={e => e.currentTarget.style.color = pathname === l.href ? "#f5f5f7" : "rgba(255,255,255,0.45)"}
+              >
+                {l.label}
+              </Link>
+            </motion.div>
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="nav-desktop">
-          <Link href="/apps"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              padding: "9px 18px", borderRadius: 999,
-              background: "#f5f5f7", color: "#0a0a0a",
-              fontSize: 13, fontWeight: 600, letterSpacing: "-0.01em",
-              textDecoration: "none", transition: "opacity 0.2s",
-            }}
-            onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
-            onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+        {/* CTA + Mobile hamburger */}
+        <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+          <motion.div
+            className="nav-desktop"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.4, ease }}
           >
-            Открыть
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </Link>
-        </div>
+            <Link href="/apps"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                padding: "9px 18px", borderRadius: 999,
+                background: "#f5f5f7", color: "#0a0a0a",
+                fontSize: 13, fontWeight: 600, letterSpacing: "-0.01em",
+                textDecoration: "none", transition: "opacity 0.2s",
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+            >
+              Продукты
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </Link>
+          </motion.div>
 
-        {/* Mobile hamburger — 44×44 tap target */}
-        <button
-          onClick={() => setOpen(o => !o)}
-          className="nav-mobile-btn"
-          aria-label="Меню"
-          style={{
-            display: "none", background: "none", border: "none", cursor: "pointer",
-            color: "#f5f5f7",
-            padding: 12,
-            margin: -6,
-            minWidth: 44, minHeight: 44,
-            alignItems: "center", justifyContent: "center",
-          }}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            {open
-              ? <path d="M6 6l12 12M6 18L18 6"/>
-              : <><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></>
-            }
-          </svg>
-        </button>
+          {/* Mobile hamburger */}
+          <motion.button
+            onClick={() => setOpen(o => !o)}
+            className="nav-mobile-btn"
+            aria-label="Меню"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3, ease }}
+            style={{
+              display: "none", background: "none", border: "none", cursor: "pointer",
+              color: "#f5f5f7", padding: 12, margin: -6,
+              minWidth: 44, minHeight: 44,
+              alignItems: "center", justifyContent: "center",
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              {open
+                ? <path d="M6 6l12 12M6 18L18 6"/>
+                : <><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></>
+              }
+            </svg>
+          </motion.button>
+        </div>
       </div>
 
-      {/* Mobile menu — CSS-driven animation, swipe-down to close */}
+      {/* Mobile menu */}
       <div
         className={`mobile-menu${open ? " mobile-menu--open" : ""}`}
         onTouchStart={(e) => { touchStartY.current = e.touches[0].clientY; }}
@@ -132,7 +155,7 @@ export default function Navbar() {
             onClick={() => setOpen(false)}
             style={{ display: "block", marginTop: 16, padding: "14px 0", textAlign: "center", fontSize: 15, fontWeight: 600, background: "#f5f5f7", color: "#0a0a0a", borderRadius: 10, textDecoration: "none" }}
           >
-            Открыть
+            Продукты
           </Link>
         </div>
       </div>

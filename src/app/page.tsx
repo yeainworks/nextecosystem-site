@@ -34,20 +34,15 @@ function FadeIn({
 
 /* ─── data ──────────────────────────────────────────────────── */
 const apps = [
-  { name: "NextVPN",        desc: "Быстрый VPN-сервис и IT-консалтинг",         cat: "Инструменты",  gradient: "linear-gradient(135deg, #0c4a6e 0%, #1e1b4b 100%)",                  url: "https://nextvpn.ru",          logo: "/logos/nextvpn.png",      span: 5 },
-  { name: "NextLOGISTICS",  desc: "Выкуп и доставка товаров из-за рубежа",      cat: "Повседневное", gradient: "linear-gradient(135deg, #0d2626 0%, #1a2e10 50%, #2e2a08 100%)",     url: "",                            logo: "/logos/nextlogistics.png", span: 4 },
-  { name: "NextCRYPTO",     desc: "Социальная сеть для инвесторов",              cat: "Финансы",      gradient: "linear-gradient(135deg, #141414 0%, #222 100%)",                    url: "https://nextforcrypto.com",   logo: "/logos/nextcrypto.png",   span: 3 },
-  { name: "NextFOCUS",      desc: "Ассистент для продуктивной работы",           cat: "Инструменты",  gradient: "linear-gradient(135deg, #1a1a2e 0%, #2e2e4e 100%)",                  url: "https://nextforfocus.com",    logo: "/logos/nextfocus.png",    span: 3 },
-  { name: "Nova",           desc: "Дизайн-студия для вашей жизни",              cat: "Другое",       gradient: "linear-gradient(135deg, #6b21a8 0%, #a855f7 100%)",                  url: "https://novaforlive.ru",      logo: "/logos/nova.png",         span: 4 },
-  { name: "Jury",           desc: "Система для онлайн-курсов и обучения",       cat: "Другое",  gradient: "linear-gradient(135deg, #0a1a2e 0%, #0d2a4a 100%)",                  url: "https://juryapp.org",         logo: "/logos/jury.png",         span: 5 },
-] as const;
-
-
-const news = [
-  { tag: "Анонс",   date: "8 мая 2025",  title: "NEXT Ecosystem — Сезон 2 запущен" },
-  { tag: "Продукт", date: "5 мая 2025",  title: "Представляем NEXT Exchange" },
-  { tag: "DeFi",    date: "28 апр 2025", title: "NEXT Vault: 14 новых стратегий доходности" },
+  { name: "NextVPN",        desc: "Быстрый VPN-сервис и IT-консалтинг",         cat: "Инструменты",  gradient: "linear-gradient(135deg, #0c4a6e 0%, #1e1b4b 100%)",                  url: "https://nextforvpn.com",       logo: "/logos/nextvpn.png",      span: 5, comingSoon: false },
+  { name: "NextLOGISTICS",  desc: "Выкуп и доставка товаров из-за рубежа",      cat: "Повседневное", gradient: "linear-gradient(135deg, #0d2626 0%, #1a2e10 50%, #2e2a08 100%)",     url: "https://nextforlogistics.com", logo: "/logos/nextlogistics.png", span: 4, comingSoon: false },
+  { name: "NextCRYPTO",     desc: "Социальная сеть для инвесторов",              cat: "Финансы",      gradient: "linear-gradient(135deg, #141414 0%, #222 100%)",                    url: "https://nextforcrypto.com",    logo: "/logos/nextcrypto.png",   span: 3, comingSoon: true  },
+  { name: "NextFOCUS",      desc: "Ассистент для продуктивной работы",           cat: "Инструменты",  gradient: "linear-gradient(135deg, #1a1a2e 0%, #2e2e4e 100%)",                  url: "https://nextforfocus.com",     logo: "/logos/nextfocus.png",    span: 3, comingSoon: false },
+  { name: "Nova",           desc: "Дизайн-студия для вашей жизни",              cat: "Другое",       gradient: "linear-gradient(135deg, #6b21a8 0%, #a855f7 100%)",                  url: "https://novainlife.com",       logo: "/logos/nova.png",         span: 4, comingSoon: false },
+  { name: "Jury",           desc: "Система для онлайн-курсов и обучения",       cat: "Другое",       gradient: "linear-gradient(135deg, #0a1a2e 0%, #0d2a4a 100%)",                  url: "https://juryapp.org",          logo: "/logos/jury.png",         span: 5, comingSoon: true  },
 ];
+
+
 
 const ticker = ["NEXTVPN", "NEXTLOGISTICS", "NEXTCRYPTO", "NEXTFOCUS", "NOVA", "JURY"];
 
@@ -118,14 +113,6 @@ export default function Home() {
         <div style={{ position: "absolute", top: "38%", left: "50%", transform: "translate(-50%,-50%)", width: 900, height: 640, background: "radial-gradient(ellipse, rgba(255,255,255,0.04) 0%, transparent 65%)", pointerEvents: "none" }}/>
 
         <div style={{ maxWidth: 960, position: "relative", zIndex: 1 }}>
-          <motion.p
-            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease }}
-            style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.17em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 40 }}
-          >
-            Растущая экосистема
-          </motion.p>
-
           <motion.h1
             initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.82, delay: 0.08, ease }}
@@ -182,28 +169,42 @@ export default function Home() {
           <FadeIn>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.17em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>Экосистема</p>
             <h2 style={{ fontSize: "clamp(40px, 5.5vw, 64px)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 0.96, marginBottom: 64 }}>
-              Продукты экосистемы.<br/>
-              <span style={{ color: "rgba(255,255,255,0.5)" }}>И это только начало.</span>
+              Один бренд.<br/>
+              <span style={{ color: "rgba(255,255,255,0.5)" }}>Продукты для каждого.</span>
             </h2>
           </FadeIn>
 
           <div className="bento-grid" style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 8 }}>
             {apps.map((app, i) => (
               <FadeIn key={app.name} delay={i * 0.065} style={{ gridColumn: `span ${app.span}` }}>
-                <a
-                  href={app.url || "#"}
-                  target={app.url ? "_blank" : undefined}
-                  rel="noopener noreferrer"
-                  className="bento-card"
-                  style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 210, background: "#141414", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, padding: "28px 28px 24px", textDecoration: "none", color: "inherit", transition: "border-color 0.22s, background 0.22s, transform 0.25s cubic-bezier(0.22,1,0.36,1)" }}
-                >
-                  <div style={{ width: 52, height: 52, borderRadius: 14, background: app.gradient, marginBottom: 20, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-                    <Image src={app.logo} alt={app.name} width={40} height={40} style={{ objectFit: "contain" }}/>
+                {app.comingSoon ? (
+                  <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 210, background: "#111", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 20, padding: "28px 28px 24px", cursor: "default", position: "relative" }}>
+                    <div style={{ width: 52, height: 52, borderRadius: 14, background: app.gradient, marginBottom: 20, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", opacity: 0.4 }}>
+                      <Image src={app.logo} alt={app.name} width={40} height={40} style={{ objectFit: "contain" }}/>
+                    </div>
+                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)", marginBottom: 10 }}>{app.cat}</div>
+                    <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.025em", color: "rgba(255,255,255,0.25)", marginBottom: 8 }}>{app.name}</div>
+                    <div style={{ fontSize: 13, color: "rgba(255,255,255,0.18)", lineHeight: 1.55 }}>{app.desc}</div>
+                    <div style={{ marginTop: "auto", paddingTop: 16 }}>
+                      <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", padding: "3px 9px", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 100 }}>Скоро</span>
+                    </div>
                   </div>
-                  <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 10 }}>{app.cat}</div>
-                  <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.025em", color: "#f5f5f7", marginBottom: 8 }}>{app.name}</div>
-                  <div style={{ fontSize: 13, color: "#f5f5f7", lineHeight: 1.55 }}>{app.desc}</div>
-                </a>
+                ) : (
+                  <a
+                    href={app.url || "#"}
+                    target={app.url ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    className="bento-card"
+                    style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 210, background: "#141414", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, padding: "28px 28px 24px", textDecoration: "none", color: "inherit", transition: "border-color 0.22s, background 0.22s, transform 0.25s cubic-bezier(0.22,1,0.36,1)" }}
+                  >
+                    <div style={{ width: 52, height: 52, borderRadius: 14, background: app.gradient, marginBottom: 20, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+                      <Image src={app.logo} alt={app.name} width={40} height={40} style={{ objectFit: "contain" }}/>
+                    </div>
+                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 10 }}>{app.cat}</div>
+                    <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.025em", color: "#f5f5f7", marginBottom: 8 }}>{app.name}</div>
+                    <div style={{ fontSize: 13, color: "#f5f5f7", lineHeight: 1.55 }}>{app.desc}</div>
+                  </a>
+                )}
               </FadeIn>
             ))}
           </div>
@@ -225,7 +226,7 @@ export default function Home() {
           <FadeIn>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.17em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 24 }}>Философия</p>
             <h2 style={{ fontSize: "clamp(40px, 5vw, 60px)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 0.96, marginBottom: 24, color: "#f5f5f7" }}>
-              Реальные<br/>продукты.
+              Продукты<br/>для каждого.
             </h2>
             <p style={{ fontSize: 17, color: "#f5f5f7", lineHeight: 1.65, maxWidth: 400, marginBottom: 36 }}>
               Каждый продукт NEXT решает конкретную задачу прямо сейчас. Никаких обещаний — только результат.
@@ -249,8 +250,8 @@ export default function Home() {
           <FadeIn>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.17em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 24 }}>Рост</p>
             <h2 style={{ fontSize: "clamp(40px, 5vw, 60px)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 0.96, marginBottom: 24, color: "#f5f5f7" }}>
-              Один бренд.<br/>
-              <span style={{ color: "rgba(255,255,255,0.5)" }}>Экосистема растёт.</span>
+              Один бренд —<br/>
+              <span style={{ color: "rgba(255,255,255,0.5)" }}>всё необходимое.</span>
             </h2>
             <p style={{ fontSize: 17, color: "#f5f5f7", lineHeight: 1.65, maxWidth: 400, marginBottom: 36 }}>
               Каждый новый продукт становится частью единой экосистемы. Мы строим долгосрочно — без лишних посредников.
@@ -263,47 +264,6 @@ export default function Home() {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
           </FadeIn>
-        </div>
-      </section>
-
-      {/* ── NEWS ────────────────────────────────────────────── */}
-      <section style={{ padding: "120px clamp(16px,5vw,40px)", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-        <div style={{ maxWidth: 1240, margin: "0 auto" }}>
-          <FadeIn>
-            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 56 }}>
-              <div>
-                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.17em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>Новости</p>
-                <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 0.97, color: "#f5f5f7" }}>
-                  Последние<br/>события
-                </h2>
-              </div>
-              <Link href="/blog" className="muted-lnk" style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", display: "flex", alignItems: "center", gap: 6, paddingBottom: 4, textDecoration: "none", transition: "color 0.2s" }}>
-                Все новости
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </Link>
-            </div>
-          </FadeIn>
-
-          {news.map((a, i) => (
-            <FadeIn key={a.title} delay={i * 0.08}>
-              <Link href="/blog" className="news-row-dk" style={{
-                display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24,
-                padding: "24px 0",
-                borderTop: "1px solid rgba(255,255,255,0.07)",
-                ...(i === news.length - 1 ? { borderBottom: "1px solid rgba(255,255,255,0.07)" } : {}),
-                textDecoration: "none", color: "inherit", transition: "opacity 0.2s",
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
-                  <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", flexShrink: 0, minWidth: 72 }}>{a.tag}</span>
-                  <span style={{ fontSize: 16, fontWeight: 500, color: "#f5f5f7", letterSpacing: "-0.015em" }}>{a.title}</span>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 20, flexShrink: 0 }}>
-                  <span style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>{a.date}</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-              </Link>
-            </FadeIn>
-          ))}
         </div>
       </section>
 
@@ -330,7 +290,6 @@ export default function Home() {
         .h-btn-ghost:hover { border-color: rgba(255,255,255,0.3) !important; background: rgba(255,255,255,0.05) !important; }
         .bento-card:hover { border-color: rgba(255,255,255,0.16) !important; background: #1b1b1b !important; transform: translateY(-3px) !important; }
         .muted-lnk:hover { color: #f5f5f7 !important; }
-        .news-row-dk:hover { opacity: 0.52 !important; }
         .cta-white:hover { opacity: 0.82 !important; }
         @media (max-width: 1024px) {
           .feat-grid { grid-template-columns: 1fr !important; gap: 56px !important; }

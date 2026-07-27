@@ -3,27 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const columns = [
-  {
-    title: "Компания",
-    links: [
-      { label: "Приложения", href: "/apps",                   external: false },
-      { label: "Blog",       href: "/blog",                   external: false },
-      { label: "Контакты",   href: "/contacts",               external: false },
-      { label: "Карьера",    href: "mailto:careers@next.xyz", external: false },
-    ],
-  },
-  {
-    title: "Поддержка",
-    links: [
-      { label: "Общие вопросы", href: "mailto:hello@next.xyz",     external: false },
-      { label: "Техподдержка",  href: "mailto:support@next.xyz",   external: false },
-      { label: "Безопасность",  href: "mailto:security@next.xyz",  external: false },
-      { label: "Инвесторам",    href: "mailto:investors@next.xyz", external: false },
-    ],
-  },
-];
-
 const socials = [
   {
     label: "Telegram",
@@ -66,18 +45,17 @@ export default function Footer() {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
 
         {/* ── Main ── */}
-        <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "48px 32px", padding: "52px 0 44px" }}>
+        <div style={{ padding: "52px 0 44px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 40 }}>
 
           {/* Brand */}
-          <div>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Link href="/" style={{ display: "inline-flex", alignItems: "center", textDecoration: "none", marginBottom: 14 }}>
               <Image src="/logo.png" alt="NEXT" width={28} height={28} style={{ borderRadius: 8 }}/>
             </Link>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.65, maxWidth: 220, marginBottom: 20 }}>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.65, maxWidth: 260, marginBottom: 20 }}>
               Реальные сервисы под одним брендом. Экосистема постоянно растёт.
             </p>
-            {/* Social icons */}
-            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
               {socials.map(s => (
                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
                   className="social-icon" aria-label={s.label}
@@ -88,40 +66,16 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Columns */}
-          {columns.map(col => (
-            <div key={col.title}>
-              <p style={{ fontSize: 12, fontWeight: 600, color: "#f5f5f7", marginBottom: 14, letterSpacing: "-0.01em" }}>
-                {col.title}
-              </p>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
-                {col.links.map(l => (
-                  <li key={l.label}>
-                    {l.external ? (
-                      <a href={l.href} target="_blank" rel="noopener noreferrer" className="fl"
-                        style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none", transition: "color 0.15s" }}>
-                        {l.label}
-                      </a>
-                    ) : (
-                      <Link href={l.href} className="fl"
-                        style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none", transition: "color 0.15s" }}>
-                        {l.label}
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
         </div>
 
         {/* ── Bottom bar ── */}
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", padding: "16px 0", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", padding: "16px 0", display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 12 }}>
           <span style={{ fontSize: 12, color: "rgba(255,255,255,0.35)" }}>Copyright © 2025 NEXT Ecosystem</span>
-          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)" }}>|</span>
+          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 4 }}>
             {legal.map((l, i) => (
               <span key={l.label} style={{ display: "flex", alignItems: "center" }}>
-                {i > 0 && <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)", margin: "0 10px" }}>|</span>}
+                {i > 0 && <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)", margin: "0 8px" }}>|</span>}
                 <a href={l.href} className="fl" style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", textDecoration: "none", transition: "color 0.15s" }}>
                   {l.label}
                 </a>
@@ -136,7 +90,7 @@ export default function Footer() {
         .fl:hover { color: #f5f5f7 !important; }
         .social-icon:hover { color: #f5f5f7 !important; }
         @media (max-width: 900px) {
-          .footer-grid { grid-template-columns: 1fr 1fr 1fr !important; }
+          .footer-grid { grid-template-columns: 1fr 1fr !important; }
           .footer-grid > *:first-child { grid-column: 1 / -1 !important; }
         }
         @media (max-width: 560px) {

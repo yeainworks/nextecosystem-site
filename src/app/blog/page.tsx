@@ -134,7 +134,7 @@ export default function BlogPage() {
         {/* Header */}
         <FadeIn>
           <div style={{ padding: "52px 0 40px", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
-            <h1 style={{ fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 700, letterSpacing: "-0.04em", color: "#f5f5f7", marginBottom: 10 }}>Blog</h1>
+            <h1 style={{ fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 700, letterSpacing: "-0.04em", color: "#f5f5f7", marginBottom: 10 }}>Новости</h1>
             <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)" }}>Последние новости и обновления от NEXT Ecosystem</p>
           </div>
         </FadeIn>
@@ -143,7 +143,7 @@ export default function BlogPage() {
         {!loading && featured.length > 0 && (
           <div style={{ padding: "40px 0" }}>
             <FadeIn>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: 20 }}>Featured Posts</p>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: 20 }}>Главное</p>
             </FadeIn>
             <FadeIn delay={0.06}>
               <div className="feat-large-grid" style={{ marginBottom: 12 }}>
@@ -166,7 +166,7 @@ export default function BlogPage() {
         {/* All Posts */}
         <FadeIn>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24, gap: 16, flexWrap: "wrap" }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>All Posts</p>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Все публикации</p>
             <div style={{ display: "flex", gap: 4, overflowX: "auto", scrollbarWidth: "none" }}>
               {CATS.map(c => (
                 <button key={c} className={`cat-tab${cat === c ? " active" : ""}`} onClick={() => { setCat(c); setVisible(8); }}>{c}</button>
