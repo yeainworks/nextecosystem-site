@@ -70,15 +70,15 @@ export default function Footer() {
 
         {/* ── Bottom bar ── */}
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", padding: "16px 0", display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 12 }}>
-          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.35)" }}>Copyright © 2025 NEXT Ecosystem</span>
+          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.35)" }}>Copyright © 2026 NEXT Ecosystem</span>
           <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)" }}>|</span>
           <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 4 }}>
             {legal.map((l, i) => (
               <span key={l.label} style={{ display: "flex", alignItems: "center" }}>
                 {i > 0 && <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)", margin: "0 8px" }}>|</span>}
-                <a href={l.href} className="fl" style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", textDecoration: "none", transition: "color 0.15s" }}>
+                <Link href={l.href} className="fl" style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", textDecoration: "none", transition: "color 0.15s" }}>
                   {l.label}
-                </a>
+                </Link>
               </span>
             ))}
           </div>

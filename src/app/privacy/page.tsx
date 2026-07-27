@@ -54,7 +54,7 @@ export default function PrivacyPage() {
           <h1 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, letterSpacing: "-0.04em", color: "#f5f5f7", marginBottom: 12, textTransform: "uppercase" }}>
             Политика конфиденциальности
           </h1>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>Последнее обновление: июль 2025</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>Последнее обновление: июль 2026</p>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 36 }}>
