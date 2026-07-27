@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { LANGS, Lang } from "@/i18n/translations";
 
 const socials = [
   {
@@ -35,7 +36,7 @@ const socials = [
 ];
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { t, lang, setLang } = useLanguage();
 
   const legal = [
     { label: t.footer.privacy, href: "/privacy" },
@@ -48,7 +49,7 @@ export default function Footer() {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
 
         {/* ── Main ── */}
-        <div style={{ padding: "52px 0 44px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 40 }}>
+        <div style={{ padding: "52px 0 44px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 32 }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Link href="/" style={{ display: "inline-flex", alignItems: "center", textDecoration: "none", marginBottom: 14 }}>
               <Image src="/logo.png" alt="NEXT" width={28} height={28} style={{ borderRadius: 8 }}/>
@@ -65,6 +66,27 @@ export default function Footer() {
                 </a>
               ))}
             </div>
+          </div>
+
+          {/* Language switcher */}
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "center" }}>
+            {LANGS.map(l => (
+              <button
+                key={l.code}
+                onClick={() => setLang(l.code as Lang)}
+                className={`lang-btn${lang === l.code ? " lang-btn--active" : ""}`}
+                style={{
+                  padding: "5px 14px", borderRadius: 8,
+                  border: lang === l.code ? "1px solid rgba(255,255,255,0.3)" : "1px solid rgba(255,255,255,0.1)",
+                  background: lang === l.code ? "rgba(255,255,255,0.1)" : "transparent",
+                  color: lang === l.code ? "#f5f5f7" : "rgba(255,255,255,0.45)",
+                  fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", cursor: "pointer",
+                  transition: "all 0.15s",
+                }}
+              >
+                {l.label}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -89,6 +111,7 @@ export default function Footer() {
       <style>{`
         .fl:hover { color: #f5f5f7 !important; }
         .social-icon:hover { color: #f5f5f7 !important; }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.25) !important; color: #f5f5f7 !important; }
       `}</style>
     </footer>
   );

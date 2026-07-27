@@ -6,18 +6,15 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { LANGS, Lang } from "@/i18n/translations";
 
 const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function Navbar() {
-  const { lang, setLang, t } = useLanguage();
+  const { t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
   const pathname = usePathname();
   const touchStartY = useRef(0);
-  const langRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 24);
@@ -30,14 +27,6 @@ export default function Navbar() {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
-
-  useEffect(() => {
-    function onClickOut(e: MouseEvent) {
-      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
-    }
-    document.addEventListener("mousedown", onClickOut);
-    return () => document.removeEventListener("mousedown", onClickOut);
-  }, []);
 
   const links = [
     { label: t.nav.apps,     href: "/apps" },
@@ -62,14 +51,14 @@ export default function Navbar() {
       <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 clamp(16px, 4vw, 40px)", width: "100%", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center" }}>
 
         {/* Logo */}
-        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.1, ease }}>
+        <motion.div style={{ gridColumn: 1 }} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.1, ease }}>
           <Link href="/" style={{ display: "inline-flex", alignItems: "center", textDecoration: "none" }}>
             <Image src="/logo.png" alt="NEXT" width={30} height={30} style={{ borderRadius: 9, flexShrink: 0 }}/>
           </Link>
         </motion.div>
 
         {/* Desktop nav links */}
-        <div style={{ display: "flex", alignItems: "center", gap: 2 }} className="nav-desktop">
+        <div style={{ display: "flex", alignItems: "center", gap: 2, gridColumn: 2 }} className="nav-desktop">
           {links.map((l, i) => (
             <motion.div key={l.href} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.18 + i * 0.07, ease }}>
               <Link href={l.href} style={{
@@ -89,55 +78,8 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Right: CTA + lang switcher + hamburger */}
-        <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 8 }}>
-
-          {/* Language switcher */}
-          <div ref={langRef} style={{ position: "relative" }}>
-            <button
-              onClick={() => setLangOpen(o => !o)}
-              style={{
-                background: "none", border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: 7, padding: "5px 10px",
-                color: "rgba(255,255,255,0.55)", fontSize: 11, fontWeight: 700,
-                letterSpacing: "0.06em", cursor: "pointer", transition: "all 0.15s",
-                display: "flex", alignItems: "center", gap: 4,
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)"; e.currentTarget.style.color = "#f5f5f7"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; e.currentTarget.style.color = "rgba(255,255,255,0.55)"; }}
-            >
-              {lang.toUpperCase()}
-              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: langOpen ? "rotate(180deg)" : "none", transition: "transform 0.15s" }}>
-                <path d="M6 9l6 6 6-6"/>
-              </svg>
-            </button>
-
-            {langOpen && (
-              <div style={{
-                position: "absolute", top: "calc(100% + 8px)", right: 0,
-                background: "#141414", border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: 10, padding: 4, minWidth: 72, zIndex: 200,
-                boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-              }}>
-                {LANGS.map(l => (
-                  <button key={l.code} onClick={() => { setLang(l.code as Lang); setLangOpen(false); }}
-                    style={{
-                      display: "block", width: "100%", padding: "7px 12px",
-                      textAlign: "left", background: lang === l.code ? "rgba(255,255,255,0.08)" : "none",
-                      border: "none", borderRadius: 7,
-                      color: lang === l.code ? "#f5f5f7" : "rgba(255,255,255,0.5)",
-                      fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", cursor: "pointer",
-                      transition: "all 0.12s",
-                    }}
-                    onMouseEnter={e => { if (lang !== l.code) { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.color = "#f5f5f7"; } }}
-                    onMouseLeave={e => { if (lang !== l.code) { e.currentTarget.style.background = "none"; e.currentTarget.style.color = "rgba(255,255,255,0.5)"; } }}
-                  >
-                    {l.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+        {/* Right: CTA + hamburger */}
+        <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 8, gridColumn: 3 }}>
 
           {/* Desktop CTA */}
           <motion.div className="nav-desktop" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.4, ease }}>
@@ -193,23 +135,6 @@ export default function Navbar() {
               {l.label}
             </Link>
           ))}
-
-          {/* Mobile lang picker */}
-          <div style={{ display: "flex", gap: 6, padding: "20px 0 4px", flexWrap: "wrap" }}>
-            {LANGS.map(l => (
-              <button key={l.code} onClick={() => setLang(l.code as Lang)}
-                style={{
-                  padding: "6px 14px", borderRadius: 8,
-                  border: lang === l.code ? "1px solid rgba(255,255,255,0.3)" : "1px solid rgba(255,255,255,0.1)",
-                  background: lang === l.code ? "rgba(255,255,255,0.1)" : "transparent",
-                  color: lang === l.code ? "#f5f5f7" : "rgba(255,255,255,0.45)",
-                  fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", cursor: "pointer",
-                }}
-              >
-                {l.label}
-              </button>
-            ))}
-          </div>
 
           <Link href="/apps" onClick={() => setOpen(false)}
             style={{ display: "block", marginTop: 16, padding: "14px 0", textAlign: "center", fontSize: 15, fontWeight: 600, background: "#f5f5f7", color: "#0a0a0a", borderRadius: 10, textDecoration: "none" }}
