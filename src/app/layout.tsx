@@ -14,7 +14,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "NextECOSYSTEM - Сервисы для каждого",
-  description: "Одна экосистема для DeFi, NFT, платежей и не только.",
+  description: "Реальные сервисы под одним брендом. Экосистема продолжает расти.",
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",
