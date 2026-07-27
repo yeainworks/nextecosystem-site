@@ -30,7 +30,7 @@ function FadeIn({ children, delay = 0, style }: { children: React.ReactNode; del
 function formatDate(iso: string, lang: string) {
   const d = new Date(iso);
   const locale = lang === "zh" ? "zh-CN" : lang === "es" ? "es-ES" : lang === "en" ? "en-US" : "ru-RU";
-  return d.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" });
+  return d.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 }
 
 function FeaturedCard({ post, large, readLabel, lang }: { post: Post; large?: boolean; readLabel: string; lang: string }) {
