@@ -14,8 +14,6 @@ const POST_CATS = ["Анонс", "Продукт", "Партнёрство", "К
 const VAC_DEPTS = ["Разработка", "Дизайн", "Маркетинг", "Продукт", "Поддержка", "Другое"];
 const VAC_TYPES = ["Полная занятость", "Частичная занятость", "Контракт", "Стажировка"];
 const VAC_FORMATS = ["Удалённо", "Офис", "Гибрид"];
-const PASS = "Agent1337-Next";
-
 function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
 }
@@ -32,6 +30,7 @@ export default function AdminPage() {
   const [auth, setAuth] = useState(false);
   const [pw, setPw] = useState("");
   const [pwErr, setPwErr] = useState(false);
+  const [pwLoading, setPwLoading] = useState(false);
   const [tab, setTab] = useState<"posts" | "vacancies">("posts");
 
   // Posts
@@ -62,9 +61,21 @@ export default function AdminPage() {
   }, [auth]);
 
   /* ── auth ── */
-  function login() {
-    if (pw === PASS) { setAuth(true); setPwErr(false); }
-    else setPwErr(true);
+  async function login() {
+    setPwLoading(true);
+    try {
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: pw }),
+      });
+      if (res.ok) { setAuth(true); setPwErr(false); }
+      else setPwErr(true);
+    } catch {
+      setPwErr(true);
+    } finally {
+      setPwLoading(false);
+    }
   }
 
   /* ── posts ── */
@@ -141,8 +152,8 @@ export default function AdminPage() {
             style={{ ...INP, borderColor: pwErr ? "rgba(255,80,80,0.5)" : "rgba(255,255,255,0.1)", marginBottom: 8 }}
           />
           {pwErr && <p style={{ fontSize: 12, color: "rgba(255,80,80,0.8)", marginBottom: 8 }}>Неверный пароль</p>}
-          <button onClick={login} style={{ width: "100%", marginTop: 8, padding: 11, borderRadius: 8, background: "#f5f5f7", color: "#0a0a0a", fontSize: 14, fontWeight: 600, border: "none", cursor: "pointer" }}>
-            Войти
+          <button onClick={login} disabled={pwLoading} style={{ width: "100%", marginTop: 8, padding: 11, borderRadius: 8, background: "#f5f5f7", color: "#0a0a0a", fontSize: 14, fontWeight: 600, border: "none", cursor: pwLoading ? "default" : "pointer", opacity: pwLoading ? 0.6 : 1 }}>
+            {pwLoading ? "..." : "Войти"}
           </button>
         </div>
       </div>
