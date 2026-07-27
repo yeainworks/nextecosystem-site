@@ -88,7 +88,7 @@ export default function VacanciesPage() {
             <p style={{ fontSize: 15, color: "rgba(255,255,255,0.35)", marginBottom: 28, lineHeight: 1.7 }}>
               Сейчас открытых вакансий нет.<br/>Следите за обновлениями.
             </p>
-            <a href="mailto:careers@next.xyz"
+            <a href="mailto:nextforbusiness@gmail.com"
               style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 22px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.6)", fontSize: 13, textDecoration: "none", transition: "border-color 0.15s" }}>
               Отправить резюме
             </a>
@@ -140,7 +140,7 @@ export default function VacanciesPage() {
                           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.75, whiteSpace: "pre-line" }}>{v.requirements}</p>
                         </div>
                       )}
-                      <a href={`mailto:careers@next.xyz?subject=Отклик: ${encodeURIComponent(v.title)}`} className="apply-btn"
+                      <a href={`mailto:nextforbusiness@gmail.com?subject=Отклик: ${encodeURIComponent(v.title)}`} className="apply-btn"
                         style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 24px", borderRadius: 8, background: "#f5f5f7", color: "#0a0a0a", fontSize: 13, fontWeight: 600, textDecoration: "none", transition: "opacity 0.15s" }}>
                         Откликнуться
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>

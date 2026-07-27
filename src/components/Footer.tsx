@@ -34,9 +34,9 @@ const socials = [
 ];
 
 const legal = [
-  { label: "Политика конфиденциальности", href: "#" },
-  { label: "Условия использования",       href: "#" },
-  { label: "Правовая информация",         href: "#" },
+  { label: "Политика конфиденциальности", href: "/privacy" },
+  { label: "Условия использования",       href: "/terms" },
+  { label: "Правовая информация",         href: "/legal" },
 ];
 
 export default function Footer() {
