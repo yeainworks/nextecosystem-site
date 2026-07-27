@@ -2,7 +2,7 @@ services:
   web:
     build: .
     ports:
-      - "3000:3000"
+      - "80:3000"
     volumes:
       # data persists across container restarts; posts and vacancies survive redeploys
       - ./src/data:/app/src/data
